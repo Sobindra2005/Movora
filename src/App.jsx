@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import { NavBar } from "./components/navbar"
-
+import { Home } from "./pages/home"
 
 function App() {
 
@@ -8,9 +8,9 @@ function App() {
     <main className="border h-dvh bg-[#030712]">
       <BrowserRouter>
         <NavBar />
-        <div>
+        <div className="h-full">
           <Routes>
-            <Route path='' element={<div className="text-white">here we go</div>} />
+            <Route path='/' element={<Home/>} />
           </Routes>
         </div>
       </BrowserRouter>
