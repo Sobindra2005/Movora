@@ -1,10 +1,13 @@
+import { NavBar } from "./components/navbar"
+
 
 function App() {
 
   return (
-    <div>
-      hello we are in app.jsx
-    </div>
+    <main className="border h-dvh bg-[#030712]">
+     <NavBar/>
+
+    </main>
   )
 }
 
