@@ -3,14 +3,14 @@ export function Hero({movie,isLoading}) {
     if(movie) return (
         <div className="relative h-[77vh] w-full  bg-black flex items-center overflow-hidden">
             {/* Background Image */}
-            <div className=" w-full inset-0">
+            <div className="inset-0">
                 <img
                     src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
 
                     className="w-full h-full object-cover opacity-80"
                 />
                 {/* Gradients to blend with background and text */}
-                <div className="absolute inset-0 bg-linear-to-r from-black/90 via-black/40 to-transparent border-2 border-white"></div>
+                <div className="absolute inset-0 bg-linear-to-r from-black/90 via-black/40 to-transparent"></div>
                 <div className="absolute inset-0 bg-linear-to-t from-gray-950 via-transparent to-transparent"></div>
             </div>
 
