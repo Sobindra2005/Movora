@@ -5,12 +5,11 @@ import { movieApi } from "../api";
 
 export function Home() {
     const [TrendingMovies, setTrendingMovies] = useState([])
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
         async function fetchTrendingMovies() {
             try {
-                setIsLoading(true)
                 const response = await movieApi.get('/trending/movie/week')
                 setTrendingMovies(response.data.results)
             } catch (err) {
@@ -19,17 +18,16 @@ export function Home() {
             finally {
                 setIsLoading(false)
             }
-
         }
-
         fetchTrendingMovies()
-
     }, [])
 
     return (
         <div className="h-full overflow-hidden">
             <Hero movie={TrendingMovies[0]} isLoading={isLoading} />
-            <Trending />
+            <div className="-mt-32">
+                <Trending movies={TrendingMovies.slice(1,TrendingMovies.length)} isLoading={isLoading} />
+            </div>
         </div>
     )
 }

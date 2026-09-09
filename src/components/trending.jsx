@@ -1,8 +1,10 @@
-export function Trending() {
+import { MovieCard, SkeletonMovieCard } from "./movieCard";
+
+export function Trending({ movies, isLoading }) {
     return (
         <div className="py-6 px-12 relative">
             <h2 className="text-white text-xl font-bold mb-4 tracking-wider uppercase">
-               Title
+                TRENDING NOW
             </h2>
 
             <div className="group relative">
@@ -13,12 +15,15 @@ export function Trending() {
                 </button>
 
                 <div
-                  
-                    className="flex space-x-4 border border-white h-20 overflow-x-auto scrollbar-hide snap-x scroll-smooth pb-4"
+                    className="flex space-x-4  overflow-x-auto scrollbar-hide snap-x scroll-smooth pb-4"
                 >
-                    {/* {movies.map((movie) => (
-                        <MovieCard key={movie.id} movie={movie} />
-                    ))} */}
+                    {
+                        isLoading ?
+                            Array.from({ length: 14 }, (_, index) => <SkeletonMovieCard key={index} />) :
+                            movies.map((movie) => (
+                                <MovieCard key={movie.id} movie={movie} />
+                            ))
+                    }
                 </div>
 
                 <button

@@ -16,15 +16,13 @@ export function MovieCard({ movie }) {
                     {movie.title}
                 </h3>
             </div>
-            {/* Border effect like in the design (white border on hover or active) */}
-            <div className="absolute inset-0 border-2 border-transparent group-hover:border-gray-300 rounded-md transition-colors duration-300 pointer-events-none"></div>
         </div>
     )
 }
 
 export function SkeletonMovieCard() {
     return (
-        <div className="relative min-w-[100px] h-[200px] rounded-md overflow-hidden flex-shrink-0 snap-start bg-gray-800 animate-pulse">
+        <div className="relative min-w-[120px] h-[200px]  rounded-md overflow-hidden flex-shrink-0 snap-start bg-gray-800 animate-pulse">
             {/* Poster skeleton */}
             <div className="w-full h-full bg-gray-700" />
 
