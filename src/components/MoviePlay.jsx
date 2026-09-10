@@ -30,6 +30,7 @@ export function MoviePlay() {
         <div className="fixed inset-0 z-[100] bg-black flex items-center justify-center">
             {/* Close Button */}
             <button
+            onClick={()=>navigate(-1)}
                 className="absolute top-6 right-8 text-white hover:text-gray-300 z-[110] bg-black/50 p-2 rounded-full"
             >
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

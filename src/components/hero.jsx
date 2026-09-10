@@ -1,5 +1,7 @@
-export function Hero({ movie, isLoading }) {
+import { useNavigate } from "react-router-dom"
 
+export function Hero({ movie, isLoading }) {
+    const navigate = useNavigate()
     if (isLoading)
         return (
             <SkeletonHeroMovie />
@@ -37,6 +39,7 @@ export function Hero({ movie, isLoading }) {
 
                     <div className="flex items-center space-x-4">
                         <button
+                            onClick={() => navigate(`/movie/play/${movie.id}`)}
                             className="flex items-center justify-center bg-[#a855f7] hover:bg-[#9333ea] text-white font-bold py-3 px-10 rounded-full transition-colors"
                         >
                             PLAY
