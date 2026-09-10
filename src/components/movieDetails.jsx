@@ -32,7 +32,7 @@ export function MovieDetails() {
 
     if (isLoading) return null
     else return (
-        <div className="w-full h-full overflow-y-auto relative">
+        <div className="w-full h-full overflow-y-auto relative flex justify-center items-center border">
             <div className="fixed inset-0 z-0">
                 <img
                     src={`https://image.tmdb.org/t/p/original/${movie.backdrop_path}`}
@@ -43,7 +43,7 @@ export function MovieDetails() {
                 <div className="absolute inset-0 bg-gradient-to-r from-[#030712] via-[#030712]/20 to-transparent"></div>
             </div>
 
-            <div className="relative z-10 container mx-auto px-6 py-24 min-h-full flex flex-col md:flex-row gap-12 items-center md:items-start">
+            <div className="relative   z-10 container mx-auto px-6 py-24 h-fit   flex flex-col md:flex-row gap-12 items-center md:items-start">
                 <div className="w-64 md:w-80 shrink-0 mt-8 md:mt-0 perspective-1000">
                     <div className="rounded-2xl overflow-hidden shadow-2xl shadow-[#a855f7]/20 border border-white/10 group transform transition-transform duration-500 hover:scale-[1.02] hover:-rotate-1">
                         <img
