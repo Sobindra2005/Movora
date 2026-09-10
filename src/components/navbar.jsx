@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 export function NavBar() {
     return (
-        <div className="fixed top-0 right-0 w-full flex justify-between p-4 z-99">
+        <div className="fixed top-0 right-0 w-full flex justify-between p-4 z-99 bg-black/30 backdrop-blur-sm">
             <div className="flex items-center space-x-8">
                 <Link to="/" className="flex items-center">
                     <img src="/logo.png" alt="MOVORA Logo" className="h-8 object-contain" />

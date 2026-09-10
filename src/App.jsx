@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import { NavBar } from "./components/navbar"
 import { Home } from "./pages/home"
+import { MovieDetails } from "./components/movieDetails"
 
 function App() {
 
@@ -11,6 +12,7 @@ function App() {
         <div className="h-full">
           <Routes>
             <Route path='/' element={<Home/>} />
+            <Route path='/movie/:id' element={<MovieDetails/>} />
           </Routes>
         </div>
       </BrowserRouter>
