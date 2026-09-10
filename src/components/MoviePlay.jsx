@@ -25,7 +25,6 @@ export function MoviePlay() {
         fetchMovieDetails()
     }, [])
 
-
     return (
         <div className="fixed inset-0 z-[100] bg-black flex items-center justify-center">
             {/* Close Button */}
