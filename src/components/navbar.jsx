@@ -1,6 +1,26 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { movieApi } from "../api";
 
 export function NavBar() {
+    const [query, setQuery] = useState('')
+
+
+    useEffect(() => {
+        async function fetchSuggestion() {
+            const response = await movieApi.get('/search/movie', {
+                params: {
+                    query: query
+                }
+            })
+
+            console.log(response.data)
+
+        }
+
+        fetchSuggestion();
+    }, [query])
+
     return (
         <div className="fixed top-0 right-0 w-full flex justify-between p-4 z-99 bg-black/30 backdrop-blur-sm">
             <div className="flex items-center space-x-8">
@@ -28,6 +48,8 @@ export function NavBar() {
                             type="text"
                             placeholder="Search movies..."
                             autoFocus
+                            value={query}
+                            onChange={(e) => setQuery(e.target.value)}
                             className="bg-black/50 border border-gray-600 text-white rounded-full py-2 px-4 pl-10 focus:outline-none focus:border-gray-700 transition-colors w-64"
                         />
                         <svg className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -38,6 +60,18 @@ export function NavBar() {
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                         </button>
                     </form>
+
+
+                    <div className="absolute top-full w-full mt-2 bg-[#141414] border border-gray-700 rounded-md shadow-xl overflow-hidden z-50 h-100 ">
+                        <div
+                            className="px-4 py-3 hover:bg-gray-800 cursor-pointer text-sm text-gray-200 transition-colors flex items-center space-x-3"
+                        >
+                            <div className="w-8 h-12 bg-gray-700 flex-shrink-0">
+                                <img src={`https://image.tmdb.org/t/p/w92`} alt="" className="w-full h-full object-cover" />
+                            </div>
+                            <span className="truncate">Movie title</span>
+                        </div>
+                    </div>
                 </div>
 
                 <button className="w-8 h-8 rounded-full overflow-hidden border border-gray-500">
