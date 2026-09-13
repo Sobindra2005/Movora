@@ -4,6 +4,7 @@ import { movieApi } from "../api";
 
 export function NavBar() {
     const [query, setQuery] = useState('')
+    const [suggestions, setSuggestions] = useState([])
 
 
     useEffect(() => {
@@ -13,9 +14,8 @@ export function NavBar() {
                     query: query
                 }
             })
-
-            console.log(response.data)
-
+            console.log(response.data.results.slice(0, 5))
+            setSuggestions(response.data.results.slice(0, 5))
         }
 
         fetchSuggestion();
@@ -62,15 +62,19 @@ export function NavBar() {
                     </form>
 
 
-                    <div className="absolute top-full w-full mt-2 bg-[#141414] border border-gray-700 rounded-md shadow-xl overflow-hidden z-50 h-100 ">
-                        <div
-                            className="px-4 py-3 hover:bg-gray-800 cursor-pointer text-sm text-gray-200 transition-colors flex items-center space-x-3"
-                        >
-                            <div className="w-8 h-12 bg-gray-700 flex-shrink-0">
-                                <img src={`https://image.tmdb.org/t/p/w92`} alt="" className="w-full h-full object-cover" />
-                            </div>
-                            <span className="truncate">Movie title</span>
-                        </div>
+                    <div className="absolute top-full w-full mt-2 bg-[#141414] border border-gray-700 rounded-md shadow-xl overflow-hidden z-50 h-fit">
+                        {suggestions.map((suggestion) =>
+                        (
+                            <div
+                                key={suggestion.id}
+                                className="px-4 py-3 hover:bg-gray-800 cursor-pointer text-sm text-gray-200 transition-colors flex items-center space-x-3"
+                            >
+                                <div className="w-8 h-12 bg-gray-700 flex-shrink-0">
+                                    <img src={`https://image.tmdb.org/t/p/w92/${suggestion.poster_path}`} alt="" className="w-full h-full object-cover" />
+                                </div>
+                                <span className="truncate">{suggestion.title}</span>
+                            </div>)
+                        )}
                     </div>
                 </div>
 
