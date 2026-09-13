@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { movieApi } from "../api";
 
 export function NavBar() {
     const [query, setQuery] = useState('')
     const [suggestions, setSuggestions] = useState([])
-
+    const navigate = useNavigate()
 
     useEffect(() => {
         async function fetchSuggestion() {
@@ -20,6 +20,19 @@ export function NavBar() {
 
         fetchSuggestion();
     }, [query])
+
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        navigate(`/search?movie=${query}`, {
+            state: {
+                query:query
+            }
+        })
+        setSuggestions([])
+        setQuery('')
+
+    }
 
     return (
         <div className="fixed top-0 right-0 w-full flex justify-between p-4 z-99 bg-black/30 backdrop-blur-sm">
@@ -43,7 +56,7 @@ export function NavBar() {
 
             <div className="flex items-center space-x-6">
                 <div className="relative flex items-center">
-                    <form className="relative animate-in fade-in slide-in-from-right-4 duration-300">
+                    <form onSubmit={handleSubmit} className="relative animate-in fade-in slide-in-from-right-4 duration-300">
                         <input
                             type="text"
                             placeholder="Search movies..."
@@ -75,7 +88,8 @@ export function NavBar() {
                                     <span className="truncate">{suggestion.title}</span>
                                 </div>)
                             )}
-                        </div>}
+                        </div>
+                    }
                 </div>
 
                 <button className="w-8 h-8 rounded-full overflow-hidden border border-gray-500">
