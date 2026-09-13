@@ -56,7 +56,8 @@ export function SearchMovies() {
                     </p>
                 )}
 
-                {!isLoading && movieList.length === 0 && (
+                {
+                !isLoading && movieList.length === 0 && (
                     <p className="text-slate-300">No movies were found.</p>
                 )}
 
