@@ -4,6 +4,7 @@ import { Home } from "./pages/home"
 import { MovieDetails } from "./pages/movieDetails"
 import { MoviePlay } from "./pages/MoviePlay"
 import { SearchMovies } from "./pages/SearchMovies"
+import { AiPreview } from "./components/AIPreview"
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
             <Route path="/search" element={<SearchMovies />} />
             <Route path='/movie/:id' element={<MovieDetails />} />
             <Route path='/movie/play/:id' element={<MoviePlay />} />
+            <Route path='/ai-preview' element={<AiPreview />} />
           </Routes>
         </div>
       </BrowserRouter>
