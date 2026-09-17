@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { shoppingAssistantAgent } from "../agent/agents";
 import { HumanMessage } from "langchain";
+import { shoppingAssistantAgent } from "../agent/agents";
 
 export function AiPreview() {
     const [input, setInput] = useState("");
@@ -15,9 +15,8 @@ export function AiPreview() {
 
             const response = await shoppingAssistantAgent.invoke({ messages: prompt })
 
-            setResponse(JSON.stringify(response, null, 2));
+            setResponse(response.messages.at(-1).content);
 
-            // setResponse(response)
         } catch (error) {
             setResponse(`error: ${error.message}`);
         } finally {

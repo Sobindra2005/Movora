@@ -1,25 +1,23 @@
 import { ChatOllama } from "@langchain/ollama";
-import { ChatGroq } from "@langchain/groq"
-import { createAgent, HumanMessage } from "langchain";
+import { createAgent } from "langchain";
 import { checkProductStockTool, searchProductTool } from "./tools.js";
 
+
 const llm = new ChatOllama({
-    baseUrl: 'http://localhost:11434',
-    model: 'llama3.1:8b',
-    temperature: 0.5
+  baseUrl: 'http://localhost:11434',
+  model: 'llama3.1:8b',
+  temperature: 0.5
 })
 
-const groqLlm = new ChatGroq({
-    apiKey: process.env.GROQ_API_KEY,
-    model: 'openai/gpt-oss-120b',
-    temperature: 1
-})
+// const groqLlm = new ChatGroq({
+//     apiKey: import.meta.env.VITE_GROQ_API_KEY,
+//     model: 'openai/gpt-oss-120b',
+//     temperature: 1
+// })
 
-
-
-export const shoppingAssistantAgent = createAgent({
+export const shoppingAssistantAgent =  createAgent({
     model: llm,
-    tools:[searchProductTool, checkProductStockTool],
+    tools: [searchProductTool, checkProductStockTool],
     systemPrompt: `
            <ROLE>
            You are a shopping assistant.
@@ -37,15 +35,15 @@ export const shoppingAssistantAgent = createAgent({
            <OUTPUT>
            -Give clear and concise answer
            </OUTPUT>
-       `,
-})
+       `
+  })
 
 // async function ShoppingAssistantAgent() {
 //     const response = await searchProductTool.invoke({ value: 'jhsjdhfjs' })
 //     console.log(response)
 // }
 
-// ShoppingAssistantAgent()
+
 
 
 // async function InteractWithLLM() {
@@ -90,4 +88,3 @@ export const shoppingAssistantAgent = createAgent({
 // for await (const data of printAnything()){
 //     console.log(data)
 // }
-
