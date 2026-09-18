@@ -12,10 +12,15 @@ export function AiPreview() {
         setLoading(true)
         try {
             const prompt = new HumanMessage(input);
+            const secondPrompt = new HumanMessage(secondInput);
 
             const response = await shoppingAssistantAgent.invoke({ messages: prompt })
 
-            setResponse(response.messages.at(-1).content);
+            console.log("second response")
+
+            setResponse(`first user :${response.messages.at(-1).content}
+    
+            \n \n ${JSON.stringify(response, null, 2)}`);
 
         } catch (error) {
             setResponse(`error: ${error.message}`);
@@ -41,10 +46,11 @@ export function AiPreview() {
                     <textarea
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
-                        placeholder="Ask something..."
+                        placeholder="Ask something (first user)..."
                         className="h-40 w-full resize-none rounded-lg border border-gray-300 p-3 outline-none focus:border-black"
                     />
 
+                   
                     <button
                         onClick={handleSend}
                         disabled={loading}
