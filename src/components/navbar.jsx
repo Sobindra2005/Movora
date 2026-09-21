@@ -7,8 +7,8 @@ import AIAssistantModal from './AIAssistantModal';
 export function NavBar() {
     const [query, setQuery] = useState('')
     const [suggestions, setSuggestions] = useState([])
-    const [isAIModalOpen, setIsAIModalOpen] = useState(false);
     const navigate = useNavigate()
+    const [isOpen, setIsOpen] = useState(false)
 
     useEffect(() => {
         async function fetchSuggestion() {
@@ -52,7 +52,7 @@ export function NavBar() {
                 <Link to="/" className="text-white text-sm font-semibold tracking-wider hover:text-gray-300 transition-colors">
                     KIDS
                 </Link>
-                <Link to="/" onClick={() => setIsAIModalOpen(true)} className="text-transparent bg-clip-text bg-linear-to-r from-purple-400 to-pink-600 text-sm font-bold tracking-wider hover:from-purple-300 hover:to-pink-500 transition-colors  ml-4">
+                <Link to="/" onClick={() => setIsOpen(true)} className="text-transparent bg-clip-text bg-linear-to-r from-purple-400 to-pink-600 text-sm font-bold tracking-wider hover:from-purple-300 hover:to-pink-500 transition-colors  ml-4">
                     AI MATCHMAKER
                 </Link>
             </div>
@@ -103,7 +103,7 @@ export function NavBar() {
                     />
                 </button>
 
-                <AIAssistantModal isOpen={isAIModalOpen} onClose={() => setIsAIModalOpen(false)} />
+                <AIAssistantModal isOpen={isOpen} onClose={()=>setIsOpen(false)} />
             </div>
         </div>
     )

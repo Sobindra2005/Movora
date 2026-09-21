@@ -38,7 +38,7 @@ const DEMO_RECOMMENDATIONS_FUNNY = [
 const AIAssistantModal = ({ isOpen, onClose }) => {
   const [description, setDescription] = useState('');
   const [stage, setStage] = useState('results'); // 'input', 'processing', 'results'
-  const [currentAgentIndex, setCurrentAgentIndex] = useState(3);
+  const [currentAgentIndex, setCurrentAgentIndex] = useState(0);
   const [results, setResults] = useState([]);
   const [recommendationMessage, setRecommendationMessage] = useState('');
 
@@ -61,7 +61,6 @@ const AIAssistantModal = ({ isOpen, onClose }) => {
     
     setStage('processing');
     setCurrentAgentIndex(0);
-
     try {
     
     } catch (error) {
