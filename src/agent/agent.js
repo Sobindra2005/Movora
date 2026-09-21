@@ -21,8 +21,6 @@ export const userPreferences = async (message) => {
         messages: [new HumanMessage(message)]
     })
 
-    console.log('response',response)
-    console.log('response',response.structuredResponse)
 
-    return response.messages.at(-1).content;
+    return response.structuredResponse;
 }

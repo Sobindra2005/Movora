@@ -1,3 +1,5 @@
+import z from "zod";
+
 export const RawPreferenceSchema = z.object({
     genreNames: z.array(z.string()).describe("Movie genre name"),
     releaseYear: z.object({

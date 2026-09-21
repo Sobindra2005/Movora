@@ -66,6 +66,9 @@ const AIAssistantModal = ({ isOpen, onClose }) => {
       const preference = await userPreferences(description.trim())
       console.log("preference agent", preference)
 
+      setCurrentAgentIndex(1);
+      
+
     } catch (error) {
       console.error("Workflow failed", error);
       // Fallback
