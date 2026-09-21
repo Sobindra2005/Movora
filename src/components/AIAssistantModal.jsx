@@ -1,4 +1,5 @@
 import  { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { MovieCard } from './MovieCard';
 
 const THRILLER_PROMPT = "Suggest me a movie like Interstellar, highly thriller, mind-bending and visually stunning.";
@@ -36,18 +37,18 @@ const DEMO_RECOMMENDATIONS_FUNNY = [
 
 const AIAssistantModal = ({ isOpen, onClose }) => {
   const [description, setDescription] = useState('');
-  const [stage, setStage] = useState('input'); // 'input', 'processing', 'results'
-  const [currentAgentIndex, setCurrentAgentIndex] = useState(0);
+  const [stage, setStage] = useState('results'); // 'input', 'processing', 'results'
+  const [currentAgentIndex, setCurrentAgentIndex] = useState(3);
   const [results, setResults] = useState([]);
   const [recommendationMessage, setRecommendationMessage] = useState('');
 
-  useEffect(() => {
-    if (isOpen) {
-      setStage('input');
-      setDescription('');
-      setCurrentAgentIndex(0);
-    }
-  }, [isOpen]);
+  // useEffect(() => {
+  //   if (isOpen) {
+  //     setStage('input');
+  //     setDescription('');
+  //     setCurrentAgentIndex(0);
+  //   }
+  // }, [isOpen]);
 
   if (!isOpen) return null;
 
@@ -72,9 +73,9 @@ const AIAssistantModal = ({ isOpen, onClose }) => {
     }
   };
 
-  return (
+  return createPortal(
     <div className="fixed inset-0 z-[100]  flex items-center justify-center bg-black/80 backdrop-blur-sm">
-      <div className="bg-[#141414] border border-gray-700 p-6 rounded-2xl w-full max-w-2xl shadow-2xl relative animate-in zoom-in-95 duration-200 overflow-hidden flex flex-col max-h-[90vh]">
+      <div className="bg-[#141414] border border-gray-700 p-6 rounded-2xl w-full max-w-2xl mx-auto shadow-2xl relative animate-in zoom-in-95 duration-200 overflow-hidden flex flex-col max-h-[90vh]">
         <button
           onClick={onClose}
           className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors z-10"
@@ -195,7 +196,8 @@ const AIAssistantModal = ({ isOpen, onClose }) => {
           )}
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
 
