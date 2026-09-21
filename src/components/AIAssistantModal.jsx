@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { MovieCard } from './MovieCard';
-import { userPreferences } from '../agent/agent';
+import { movieRecommendation, movieResearcher, userPreferences } from '../agent/agent';
 
 const THRILLER_PROMPT = "Suggest me a movie like Interstellar, highly thriller, mind-bending and visually stunning.";
 
@@ -67,7 +67,13 @@ const AIAssistantModal = ({ isOpen, onClose }) => {
       console.log("preference agent", preference)
 
       setCurrentAgentIndex(1);
-      
+
+      const { response, movieList } = await movieResearcher(preference)
+      console.log("movie reseacher agent:", response, movieList)
+
+      setCurrentAgentIndex(2);
+      const recommendedMovies = await movieRecommendation(response)
+      console.log("final output:",recommendedMovies);
 
     } catch (error) {
       console.error("Workflow failed", error);
