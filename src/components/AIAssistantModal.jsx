@@ -1,6 +1,7 @@
-import  { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { MovieCard } from './MovieCard';
+import { userPreferences } from '../agent/agent';
 
 const THRILLER_PROMPT = "Suggest me a movie like Interstellar, highly thriller, mind-bending and visually stunning.";
 
@@ -37,18 +38,18 @@ const DEMO_RECOMMENDATIONS_FUNNY = [
 
 const AIAssistantModal = ({ isOpen, onClose }) => {
   const [description, setDescription] = useState('');
-  const [stage, setStage] = useState('results'); // 'input', 'processing', 'results'
+  const [stage, setStage] = useState('input'); // 'input', 'processing', 'results'
   const [currentAgentIndex, setCurrentAgentIndex] = useState(0);
   const [results, setResults] = useState([]);
   const [recommendationMessage, setRecommendationMessage] = useState('');
 
-  // useEffect(() => {
-  //   if (isOpen) {
-  //     setStage('input');
-  //     setDescription('');
-  //     setCurrentAgentIndex(0);
-  //   }
-  // }, [isOpen]);
+  useEffect(() => {
+    if (isOpen) {
+      setStage('input');
+      setDescription('');
+      setCurrentAgentIndex(0);
+    }
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
@@ -58,11 +59,13 @@ const AIAssistantModal = ({ isOpen, onClose }) => {
 
   const handleStartSearch = async () => {
     if (!description.trim()) return;
-    
+
     setStage('processing');
     setCurrentAgentIndex(0);
     try {
-    
+      const preference = await userPreferences(description.trim())
+      console.log("preference agent", preference)
+
     } catch (error) {
       console.error("Workflow failed", error);
       // Fallback
@@ -142,8 +145,8 @@ const AIAssistantModal = ({ isOpen, onClose }) => {
                     <div
                       key={agent.id}
                       className={`absolute flex flex-col items-center justify-center transition-all duration-500 ${isActive ? 'opacity-100 translate-y-0 scale-100' :
-                          isDone ? 'opacity-0 -translate-y-8 scale-95' :
-                            'opacity-0 translate-y-8 scale-95'
+                        isDone ? 'opacity-0 -translate-y-8 scale-95' :
+                          'opacity-0 translate-y-8 scale-95'
                         }`}
                     >
                       <h4 className="text-purple-300 font-medium tracking-wide">

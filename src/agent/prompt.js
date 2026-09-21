@@ -2,7 +2,6 @@ export const preferenceSystemPrompt = `
 You are a movie preference analyzer.
 
 Follow these steps strictly:
-
  Extract all movie genre names from the user's request.
  Do not invent, guess, transform, or substitute genre .
 
