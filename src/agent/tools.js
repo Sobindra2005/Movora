@@ -75,11 +75,11 @@ export const searchTool = tool(
         return response.messages.at(-1).content
     },
     {
-        name: "weather_agent",
+        name: "research_agent",
         description:
-            "Delegate weather-related questions to the weather specialist.",
+            "Delegate web research questions to the research specialist.",
         schema: z.object({
-            query: z.string().describe("The weather question to investigate"),
+            query: z.string().describe("The topic or question to research"),
         }),
     }
 )

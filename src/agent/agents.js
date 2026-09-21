@@ -1,6 +1,6 @@
 import { ChatOllama } from "@langchain/ollama";
-import { createAgent, HumanMessage } from "langchain";
-import { checkProductStockTool, searchProductTool, weatherTool } from "./tools.js";
+import { createAgent, HumanMessage, toolStrategy } from "langchain";
+import { checkProductStockTool, searchProductTool, searchTool, weatherTool } from "./tools.js";
 import { MemorySaver } from "@langchain/langgraph";
 import { MultiServerMCPClient } from "@langchain/mcp-adapters";
 
@@ -8,8 +8,8 @@ const checkpointer = new MemorySaver();
 
 const llm = new ChatOllama({
   baseUrl: 'http://localhost:11434',
-  model: 'qwen3:1.7b',
-  temperature: 0.5
+  model: 'llama3.1:8b',
+  temperature: 1
 })
 
 export const client = new MultiServerMCPClient({
@@ -60,10 +60,11 @@ export const TripPlannerAgent = createAgent({
 
     Use the specialists when appropriate.
     Combine their results into a clear final answer.
-`,
-  tools: [weatherTool]
-})
 
+    while using tools , ensure to properly follow the schema mentioned in each tool
+`,
+  tools: [weatherTool, searchTool]
+})
 
 // interactWithWeather()
 
@@ -147,3 +148,37 @@ export const shoppingAssistantAgent = createAgent({
 // for await (const data of printAnything()){
 //     console.log(data)
 // }
+
+[
+  {
+    name: '',
+    description: ''
+  }
+]
+
+const outputSchema = z.object({
+  movies: z.array(
+    z.object({
+      name: z.string().describe('movie title'),
+      description: z.string().describe("movies description")
+    })
+  )
+})
+
+// llm.invoke().withStructuredOutput(outputSchema)
+
+const PersonalAgent = createAgent({
+  model: llm,
+  systemPrompt: 'you are Movie recommender',
+  responseFormat: toolStrategy(outputSchema)
+})
+
+async function interact() {
+  const response = await PersonalAgent.invoke({ messages: new HumanMessage('suggest me the best movies of all time ') })
+  console.log(response,
+    "\n\n",
+    response.messages.at(-1).content
+  )
+}
+
+interact()

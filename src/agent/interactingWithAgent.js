@@ -5,11 +5,11 @@ import { searchAgent, TripPlannerAgent } from "./agents.js";
 const interactingWithTripPlanner = async () => {
     const agent = TripPlannerAgent
 
-    const prompt = new HumanMessage("suggest me a best spot to visit inside Nepal");
+    const prompt = new HumanMessage("I want to go hike kathmandu tomorrow . check the weather and suggest some popular hiking spots ");
     const response = await agent.invoke({ messages: prompt })
 
+    console.log(response, "\n \n")
     console.log(response.messages.at(-1).content)
-
 }
 
 interactingWithTripPlanner();
@@ -23,7 +23,6 @@ interactingWithTripPlanner();
 //     console.log(response);
 //     console.log(`\n\n`, response.messages.at(-1).content)
 // }
-
 
 // const interactWithWeather = async () => {
 //   const agent = await weatherAgent();
