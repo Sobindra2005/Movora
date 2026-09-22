@@ -12,8 +12,6 @@ export function SearchMovies() {
     const query = searchParams.get('movie')
     const location = useLocation();
 
-    console.log(location.state)
-
     useEffect(() => {
         async function FetchSearchMovie() {
             try {

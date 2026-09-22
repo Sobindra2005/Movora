@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { movieApi } from "../api";
+import AIAssistantModal from './AIAssistantModal';
+
 
 export function NavBar() {
     const [query, setQuery] = useState('')
     const [suggestions, setSuggestions] = useState([])
     const navigate = useNavigate()
+    const [isOpen, setIsOpen] = useState(false)
 
     useEffect(() => {
         async function fetchSuggestion() {
@@ -26,7 +29,7 @@ export function NavBar() {
         e.preventDefault()
         navigate(`/search?movie=${query}`, {
             state: {
-                query:query
+                query: query
             }
         })
         setSuggestions([])
@@ -49,7 +52,7 @@ export function NavBar() {
                 <Link to="/" className="text-white text-sm font-semibold tracking-wider hover:text-gray-300 transition-colors">
                     KIDS
                 </Link>
-                <Link to="/" className="text-transparent bg-clip-text bg-linear-to-r from-purple-400 to-pink-600 text-sm font-bold tracking-wider hover:from-purple-300 hover:to-pink-500 transition-colors  ml-4">
+                <Link to="/" onClick={() => setIsOpen(true)} className="text-transparent bg-clip-text bg-linear-to-r from-purple-400 to-pink-600 text-sm font-bold tracking-wider hover:from-purple-300 hover:to-pink-500 transition-colors  ml-4">
                     AI MATCHMAKER
                 </Link>
             </div>
@@ -99,6 +102,8 @@ export function NavBar() {
                         className="w-full h-full object-cover"
                     />
                 </button>
+
+                <AIAssistantModal isOpen={isOpen} onClose={()=>setIsOpen(false)} />
             </div>
         </div>
     )
