@@ -8,8 +8,6 @@ export const RawPreferenceSchema = z.object({
     }).describe("Acceptable release year range")
 });
 
-
 export const RecommendationSchema = z.object({
     recommendations: z.string().describe("A JSON stringified array of objects representing the top 3 recommended movies. Each object must have 'id', 'title', and 'reason'.")
 });
-

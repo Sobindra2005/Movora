@@ -52,17 +52,34 @@ Release Year: ${JSON.stringify(preference.releaseYear)}`)],
     return { response, movieList };
 }
 
-export const movieRecommendation = async (movieResearcherResponse) => {
+export async function recommendMovies(researchResponse, movieList) {
     const result = await recommendationAgent.invoke({
         messages: [new HumanMessage(`
 Here are 6 movie options:
-${movieResearcherResponse}
+${researchResponse}
         `)]
     });
 
+    let recommendations = [];
+    if (result.structuredResponse?.recommendations) {
+        try {
+            recommendations = JSON.parse(result.structuredResponse.recommendations);
+        } catch (e) {
+            console.error("Failed to parse recommendations string", e);
+        }
+    }
+
     console.log(result)
 
-    console.log(JSON.parse(result.structuredResponse))
+    // Map the selected recommendations to the full movie data from movieList
+    const finalMovies = recommendations.map(rec => {
+        const fullMovie = movieList.find(m => m.id === rec.id) || {};
+        return {
+            ...fullMovie,
+            reason: rec.reason,
+            poster_path: fullMovie.posterPath || fullMovie.poster_path
+        };
+    });
 
-    return JSON.parse(result.structuredResponse)
+    return finalMovies;
 }

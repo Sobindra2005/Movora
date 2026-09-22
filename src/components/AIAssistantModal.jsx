@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { MovieCard } from './MovieCard';
-import { movieRecommendation, movieResearcher, userPreferences } from '../agent/agent';
+import {  movieResearcher, recommendMovies, userPreferences } from '../agent/agent';
 
 const THRILLER_PROMPT = "Suggest me a movie like Interstellar, highly thriller, mind-bending and visually stunning.";
 
@@ -63,18 +63,22 @@ const AIAssistantModal = ({ isOpen, onClose }) => {
     setStage('processing');
     setCurrentAgentIndex(0);
     try {
-      const preference = await userPreferences(description.trim())
-      console.log("preference agent", preference)
-
+           const preferenceAgent = await userPreferences(description);
+      console.log("Preference Agent:", preferenceAgent)
       setCurrentAgentIndex(1);
 
-      const { response, movieList } = await movieResearcher(preference)
-      console.log("movie reseacher agent:", response, movieList)
-
+      const researchAgent = await movieResearcher(preferenceAgent);
+      console.log("Research Agent:", researchAgent)
       setCurrentAgentIndex(2);
-      const recommendedMovies = await movieRecommendation(response)
-      console.log("final output:",recommendedMovies);
 
+      const recommendations = await recommendMovies(researchAgent.response, researchAgent.movieList);
+      console.log("Recommendation Agent:", recommendations)
+      setCurrentAgentIndex(3);
+      
+      setResults(recommendations);
+      setRecommendationMessage("Here are your 3 heavily vetted recommendations, ranked perfectly to your taste profile.");
+      setStage('results');
+    
     } catch (error) {
       console.error("Workflow failed", error);
       // Fallback
