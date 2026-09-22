@@ -10,5 +10,6 @@ export const RawPreferenceSchema = z.object({
 
 
 export const RecommendationSchema = z.object({
-    recommendations: z.string("valid json format").describe("The final recommended movies").length(3)
+    recommendations: z.string().describe("A JSON stringified array of objects representing the top 3 recommended movies. Each object must have 'id', 'title', and 'reason'.")
 });
+
